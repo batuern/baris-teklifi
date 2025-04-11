@@ -23,21 +23,15 @@
 
     h2 {
       font-size: 24px;
-      margin-bottom: 20px;
-      animation: nazliYazi 3s ease-in-out infinite;
-    }
-
-    @keyframes nazliYazi {
-      0% { opacity: 0; transform: translateY(10px); }
-      50% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-10px); }
+      margin: 20px 0;
+      position: relative;
+      z-index: 5;
     }
 
     img {
       width: 250px;
       height: auto;
       border-radius: 10px;
-      margin-bottom: 20px;
     }
 
     .kacis-alani {
@@ -46,7 +40,7 @@
       height: 200px;
       border: 2px dashed #aaa;
       border-radius: 12px;
-      margin-top: 10px;
+      margin-top: 20px;
     }
 
     .buttons {
@@ -74,19 +68,27 @@
       color: white;
       left: 50px;
       top: 120px;
+      z-index: 10;
     }
 
     #hayir {
       background-color: #f44336;
       color: white;
-      left: 200px;
+      z-index: 9;
+    }
+
+    #yasakliAlan {
+      position: absolute;
+      left: 50px;
       top: 120px;
+      width: 100px;
+      height: 40px;
     }
 
     #mesaj {
       position: absolute;
       top: 20%;
-      font-size: 28px;
+      font-size: 24px;
       color: #d60076;
       display: none;
       animation: yukari 2s ease-in-out forwards;
@@ -112,56 +114,30 @@
 </head>
 <body>
 
-  <img src="https://i.imgur.com/VmXgzGG.jpeg" alt="Timsah" />
-
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Crocodylus_johnsoni_02.jpg/640px-Crocodylus_johnsoni_02.jpg" alt="Timsah" />
   <h2>Benimle Barışmak İstiyor Musun Nazlı?</h2>
 
   <div class="kacis-alani" id="kacisKutusu">
     <div class="buttons">
+      <div id="yasakliAlan"></div>
       <button id="evet" onclick="evetTiklandi()">Evet</button>
       <button id="hayir">Hayır</button>
     </div>
   </div>
 
-  <div id="mesaj">Seni Seviyorum Nazlı ❤️</div>
+  <div id="mesaj">Bende öyle düşünmüştüm 🥰🥰🥰</div>
 
   <audio id="evetSes" src="https://www.myinstants.com/media/sounds/yes.mp3"></audio>
-  <audio id="hayirSes" src="https://www.myinstants.com/media/sounds/nope.mp3"></audio>
-  <audio id="muzik" src="https://www.bensound.com/bensound-music/bensound-love.mp3"></audio>
 
   <script>
     const hayir = document.getElementById("hayir");
-    const hayirSes = document.getElementById("hayirSes");
     const container = document.getElementById("kacisKutusu");
-
-    hayir.addEventListener('mouseenter', () => {
-      const btnWidth = hayir.offsetWidth;
-      const btnHeight = hayir.offsetHeight;
-
-      const maxX = container.clientWidth - btnWidth;
-      const maxY = container.clientHeight - btnHeight;
-
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
-
-      hayir.style.left = `${x}px`;
-      hayir.style.top = `${y}px`;
-
-      hayirSes.currentTime = 0;
-      hayirSes.play();
-    });
-
-    hayir.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    });
+    const yasakli = document.getElementById("yasakliAlan");
 
     function evetTiklandi() {
       document.getElementById("evetSes").play();
-      document.getElementById("muzik").play();
       document.getElementById("mesaj").style.display = "block";
 
-      // Kalp efektleri
       for (let i = 0; i < 20; i++) {
         const kalp = document.createElement("div");
         kalp.classList.add("kalp");
@@ -174,6 +150,40 @@
         }, 3000);
       }
     }
+
+    hayir.addEventListener('mouseenter', () => {
+      const btnWidth = hayir.offsetWidth;
+      const btnHeight = hayir.offsetHeight;
+      const containerRect = container.getBoundingClientRect();
+      const yasakliRect = yasakli.getBoundingClientRect();
+
+      let x, y, deneme = 0;
+
+      do {
+        x = Math.random() * (container.clientWidth - btnWidth);
+        y = Math.random() * (container.clientHeight - btnHeight);
+
+        const hayirX = containerRect.left + x;
+        const hayirY = containerRect.top + y;
+
+        const cakisma =
+          hayirX < yasakliRect.right &&
+          hayirX + btnWidth > yasakliRect.left &&
+          hayirY < yasakliRect.bottom &&
+          hayirY + btnHeight > yasakliRect.top;
+
+        if (!cakisma) break;
+        deneme++;
+      } while (deneme < 100);
+
+      hayir.style.left = `${x}px`;
+      hayir.style.top = `${y}px`;
+    });
+
+    hayir.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
   </script>
 
 </body>
