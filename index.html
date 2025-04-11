@@ -3,14 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Barış Teklifi</title>
+  <title>Benimle Barışır Mısın Nazlı?</title>
   <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet"/>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       display: flex;
@@ -20,19 +16,28 @@
       height: 100vh;
       text-align: center;
       font-family: 'Comic Neue', cursive;
-      background-color: #f0f8ff;
-    }
-
-    img {
-      width: 200px;
-      height: auto;
-      border-radius: 10px;
-      margin-bottom: 20px;
+      background-color: #fff0f5;
+      overflow: hidden;
+      position: relative;
     }
 
     h2 {
       font-size: 24px;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
+      animation: nazliYazi 3s ease-in-out infinite;
+    }
+
+    @keyframes nazliYazi {
+      0% { opacity: 0; transform: translateY(10px); }
+      50% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-10px); }
+    }
+
+    img {
+      width: 250px;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 20px;
     }
 
     .kacis-alani {
@@ -41,9 +46,6 @@
       height: 200px;
       border: 2px dashed #aaa;
       border-radius: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       margin-top: 10px;
     }
 
@@ -80,16 +82,39 @@
       left: 200px;
       top: 120px;
     }
+
+    #mesaj {
+      position: absolute;
+      top: 20%;
+      font-size: 28px;
+      color: #d60076;
+      display: none;
+      animation: yukari 2s ease-in-out forwards;
+    }
+
+    @keyframes yukari {
+      0% { transform: translateY(0); opacity: 0; }
+      100% { transform: translateY(-40px); opacity: 1; }
+    }
+
+    .kalp {
+      position: absolute;
+      font-size: 24px;
+      color: red;
+      animation: kalpAnimasyon 3s linear infinite;
+    }
+
+    @keyframes kalpAnimasyon {
+      0% { bottom: 0; opacity: 1; }
+      100% { bottom: 100vh; opacity: 0; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Çalışan üzgün kedi görseli -->
-  <img src="https://placekitten.com/300/200" alt="Üzgün Kedi" />
-  
-  <h2>Benimle barışmak istiyor musun?</h2>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Crocodylus_porosus_%28Crocodile%29.jpg/640px-Crocodylus_porosus_%28Crocodile%29.jpg" alt="Timsah" />
+  <h2>Benimle Barışmak İstiyor Musun Nazlı?</h2>
 
-  <!-- Kaçış alanı: sadece bu kutunun içinde -->
   <div class="kacis-alani" id="kacisKutusu">
     <div class="buttons">
       <button id="evet" onclick="evetTiklandi()">Evet</button>
@@ -97,17 +122,13 @@
     </div>
   </div>
 
-  <!-- Ses efektleri -->
+  <div id="mesaj">Seni Seviyorum Nazlı ❤️</div>
+
   <audio id="evetSes" src="https://www.myinstants.com/media/sounds/yes.mp3"></audio>
   <audio id="hayirSes" src="https://www.myinstants.com/media/sounds/nope.mp3"></audio>
+  <audio id="muzik" src="https://www.bensound.com/bensound-music/bensound-love.mp3"></audio>
 
   <script>
-    function evetTiklandi() {
-      const ses = document.getElementById("evetSes");
-      ses.play();
-      window.open("https://www.google.com", "_blank");
-    }
-
     const hayir = document.getElementById("hayir");
     const hayirSes = document.getElementById("hayirSes");
     const container = document.getElementById("kacisKutusu");
@@ -133,6 +154,25 @@
       e.preventDefault();
       e.stopPropagation();
     });
+
+    function evetTiklandi() {
+      document.getElementById("evetSes").play();
+      document.getElementById("muzik").play();
+      document.getElementById("mesaj").style.display = "block";
+
+      // Kalp efektleri
+      for (let i = 0; i < 20; i++) {
+        const kalp = document.createElement("div");
+        kalp.classList.add("kalp");
+        kalp.style.left = `${Math.random() * 100}%`;
+        kalp.innerText = "❤️";
+        document.body.appendChild(kalp);
+
+        setTimeout(() => {
+          kalp.remove();
+        }, 3000);
+      }
+    }
   </script>
 
 </body>
