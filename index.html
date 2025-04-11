@@ -159,34 +159,41 @@
       }
     }
 
-    hayir.addEventListener('mouseenter', () => {
-      const btnWidth = hayir.offsetWidth;
-      const btnHeight = hayir.offsetHeight;
-      const containerRect = container.getBoundingClientRect();
-      const yasakliRect = yasakli.getBoundingClientRect();
+    function kacHayirButonu() {
+  const btnWidth = hayir.offsetWidth;
+  const btnHeight = hayir.offsetHeight;
+  const containerRect = container.getBoundingClientRect();
+  const yasakliRect = yasakli.getBoundingClientRect();
 
-      let x, y, deneme = 0;
+  let x, y, deneme = 0;
 
-      do {
-        x = Math.random() * (container.clientWidth - btnWidth);
-        y = Math.random() * (container.clientHeight - btnHeight);
+  do {
+    x = Math.random() * (container.clientWidth - btnWidth);
+    y = Math.random() * (container.clientHeight - btnHeight);
 
-        const hayirX = containerRect.left + x;
-        const hayirY = containerRect.top + y;
+    const hayirX = containerRect.left + x;
+    const hayirY = containerRect.top + y;
 
-        const cakisma =
-          hayirX < yasakliRect.right &&
-          hayirX + btnWidth > yasakliRect.left &&
-          hayirY < yasakliRect.bottom &&
-          hayirY + btnHeight > yasakliRect.top;
+    const cakisma =
+      hayirX < yasakliRect.right &&
+      hayirX + btnWidth > yasakliRect.left &&
+      hayirY < yasakliRect.bottom &&
+      hayirY + btnHeight > yasakliRect.top;
 
-        if (!cakisma) break;
-        deneme++;
-      } while (deneme < 100);
+    if (!cakisma) break;
+    deneme++;
+  } while (deneme < 100);
 
-      hayir.style.left = `${x}px`;
-      hayir.style.top = `${y}px`;
-    });
+  hayir.style.left = `${x}px`;
+  hayir.style.top = `${y}px`;
+}
+
+// Fareyle üstüne gelince kaç
+hayir.addEventListener('mouseenter', kacHayirButonu);
+
+// Telefonda dokununca da kaç
+hayir.addEventListener('touchstart', kacHayirButonu);
+
 
     hayir.addEventListener('click', (e) => {
       e.preventDefault();
