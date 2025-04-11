@@ -113,6 +113,8 @@
   </style>
 </head>
 <body>
+  <audio id="muzik" src="https://www.bensound.com/bensound-music/bensound-love.mp3"></audio>
+
 
   <img src="https://cdn.pixabay.com/photo/2021/08/17/20/12/alligator-6553327_960_720.jpg" alt="Timsah" />
 
@@ -136,6 +138,7 @@
     const yasakli = document.getElementById("yasakliAlan");
 
     function evetTiklandi() {
+      document.getElementById("muzik").play();
       document.getElementById("evetSes").play();
       document.getElementById("mesaj").style.display = "block";
 
